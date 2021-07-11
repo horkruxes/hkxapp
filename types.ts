@@ -20,3 +20,20 @@ export type TabOneParamList = {
 export type TabTwoParamList = {
   TabTwoScreen: undefined;
 };
+
+export type Message = {
+  ID: string
+  displayedName: string
+  content: string
+  signature: string
+  Correct: boolean
+  Color: string
+  MessageID: string
+  CreatedAt: string
+  DisplayedDate: string
+  Pod: string
+  authorBase64: string
+  authorPubKey: string
+  authorURLSafe: string
+  signatureBase64: string
+}
