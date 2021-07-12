@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FlatList, Pressable, StyleSheet } from 'react-native';
+import { FlatList, Pressable, RefreshControl, StyleSheet } from 'react-native';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Sep from '../components/Separator'
@@ -13,8 +13,9 @@ import { cleanMessages } from '../utils/signature';
 export default function TabTwoScreen() {
 
   let [loading, setLoading] = useState(true);
+  let [refreshing, setRefreshing] = useState(false);
   let [messages, setMessages] = useState<Message[]>([]);
-  let [sources, setSources] = useState<string[]>(['horkruxes.amethysts.studio', 'hk.quimerch.com']);
+  let [sources, setSources] = useState<string[]>(['horkruxes.amethysts.studio', 'hk.quimerch.com', 'fr.hk.quimerch.com']);
 
   const getOnlineData = async () => {
     setLoading(true);
@@ -33,18 +34,23 @@ export default function TabTwoScreen() {
     const newMessages = cleanMessages(responses)
     setMessages(newMessages)
     setLoading(false);
+    setRefreshing(false)
   };
+  useEffect(() => {
+    const q = () => getOnlineData()
+    q()
+  }, [])
 
 
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={getOnlineData}>
-        <Feather name="refresh-ccw" size={18} color="grey" />
-      </Pressable>
       <FlatList
-        style={styles.listStyles}
         data={messages}
+        refreshControl={<RefreshControl
+          refreshing={refreshing}
+          onRefresh={getOnlineData}
+        />}
         keyExtractor={(item) => item.ID}
         renderItem={({ item: msg }: { item: Message }) => <MessageComp message={msg} />}
       />
@@ -58,6 +64,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#888',
   },
   title: {
     fontSize: 20,
@@ -67,9 +74,6 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: '80%',
-  },
-  listStyles: {
-    marginHorizontal: 8,
   },
   msgAuthor: {
     flex: 1,

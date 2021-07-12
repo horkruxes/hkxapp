@@ -14,19 +14,35 @@ export const MessageComp = ({
     message: Message;
 }) => {
 
-    return <View>
-        <View style={styles.colorBox} />
-        <Text style={styles.msgAuthor}>{message.displayedName}</Text>
-        <Text>{message.content}</Text>
-        <Sep />
+    return <View style={styles.main}>
+        <View style={{
+            height: 3,
+            width: '100%',
+            backgroundColor: message.Color,
+        }} />
+        <View style={styles.content}>
+            <Text style={styles.msgAuthor}>{message.displayedName}</Text>
+            <Text>{message.content}</Text>
+        </View>
     </View>
 
 }
 
 const styles = StyleSheet.create({
+    main: {
+        marginVertical: 4,
+    },
+    content: {
+        paddingHorizontal: 8,
+    },
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     colorBox: {
-        height: 2,
-        width: 2,
+        height: 10,
+        width: '100%',
         backgroundColor: 'red',
     },
     msgAuthor: {
