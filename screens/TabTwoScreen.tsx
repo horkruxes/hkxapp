@@ -9,31 +9,17 @@ import { Message } from '../types';
 import { Feather } from '@expo/vector-icons';
 import { MessageComp } from '../components/Message';
 import { cleanMessages } from '../utils/signature';
+import { ListType, loadMessages } from '../utils/dataLoading';
 
 export default function TabTwoScreen() {
 
-  let [loading, setLoading] = useState(true);
   let [refreshing, setRefreshing] = useState(false);
   let [messages, setMessages] = useState<Message[]>([]);
   let [sources, setSources] = useState<string[]>(['horkruxes.amethysts.studio', 'hk.quimerch.com', 'fr.hk.quimerch.com']);
 
   const getOnlineData = async () => {
-    setLoading(true);
-
-    let responses: Message[] = []
-    await Promise.all(sources.map((async source => {
-      const url = `https://${source}/api/message`
-      const response = await axios.get<Message[]>(url, {
-        headers: { 'Content-Type': 'application/json' }
-      })
-      responses = responses.concat(response.data)
-      console.log('---------\ngot', response.data, 'from', url, 'now response is', responses.length)
-    })))
-    console.log('ifnished')
-
-    const newMessages = cleanMessages(responses)
+    const newMessages = await loadMessages(sources, ListType.All)
     setMessages(newMessages)
-    setLoading(false);
     setRefreshing(false)
   };
   useEffect(() => {

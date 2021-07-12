@@ -21,7 +21,12 @@ export const MessageComp = ({
             backgroundColor: message.Color,
         }} />
         <View style={styles.content}>
-            <Text style={styles.msgAuthor}>{message.displayedName}</Text>
+            <View style={styles.header}>
+                <Text style={styles.msgAuthor}>{message.displayedName}</Text>
+                <Text style={styles.infos}>on {message.Pod}</Text>
+                <Text style={styles.infos}>{message.authorBase64}</Text>
+                <Text style={styles.infos}>{message.DisplayedDate}</Text>
+            </View>
             <Text>{message.content}</Text>
         </View>
     </View>
@@ -31,6 +36,13 @@ export const MessageComp = ({
 const styles = StyleSheet.create({
     main: {
         marginVertical: 4,
+    },
+    header: {
+
+    },
+    infos: {
+        color: '#888',
+        fontStyle: 'italic',
     },
     content: {
         paddingHorizontal: 8,
