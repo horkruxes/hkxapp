@@ -1,71 +1,51 @@
-import * as React from 'react';
-import { FlatList, Pressable, RefreshControl, StyleSheet } from 'react-native';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import Sep from '../components/Separator'
+import * as React from "react";
+import { FlatList, Pressable, RefreshControl, StyleSheet } from "react-native";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Sep from "../components/Separator";
 
-import { Text, View } from '../components/Themed';
-import { Message } from '../types';
-import { Feather } from '@expo/vector-icons';
-import { MessageComp } from '../components/Message';
-import { cleanMessages } from '../utils/signature';
-import { ListType, loadMessages } from '../utils/dataLoading';
+import { Text, View } from "../components/Themed";
+import { Message } from "../types";
+import { Feather } from "@expo/vector-icons";
+import { MessageComp } from "../components/Message";
+import { cleanMessages } from "../utils/signature";
+import { loadMessages } from "../utils/dataLoading";
+import MessageList from "../components/MessageList";
+import { ListType } from "../types";
 
 export default function TabTwoScreen() {
+  let [sources, setSources] = useState<string[]>([
+    "horkruxes.amethysts.studio",
+    "hk.quimerch.com",
+    "fr.hk.quimerch.com",
+  ]);
+  let [type, setType] = useState<ListType>(ListType.All);
+  let [arg, setArg] = useState("");
 
-  let [refreshing, setRefreshing] = useState(false);
-  let [messages, setMessages] = useState<Message[]>([]);
-  let [sources, setSources] = useState<string[]>(['horkruxes.amethysts.studio', 'hk.quimerch.com', 'fr.hk.quimerch.com']);
-
-  const getOnlineData = async () => {
-    const newMessages = await loadMessages(sources, ListType.All)
-    setMessages(newMessages)
-    setRefreshing(false)
-  };
-  useEffect(() => {
-    const q = () => getOnlineData()
-    q()
-  }, [])
-
-
-
-  return (
-    <View style={styles.container}>
-      <FlatList
-        data={messages}
-        refreshControl={<RefreshControl
-          refreshing={refreshing}
-          onRefresh={getOnlineData}
-        />}
-        keyExtractor={(item) => item.ID}
-        renderItem={({ item: msg }: { item: Message }) => <MessageComp message={msg} />}
-      />
-
-    </View>
-  );
+  return <MessageList options={{ sources, type, arg }} />;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#888',
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#888",
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%',
+    width: "80%",
   },
   msgAuthor: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginVertical: 5,
-    fontWeight: 'bold',
-  }
+    fontWeight: "bold",
+  },
 });

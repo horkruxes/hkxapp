@@ -9,7 +9,7 @@ export type RootStackParamList = {
 };
 
 export type BottomTabParamList = {
-  TabOne: undefined;
+  Options: undefined;
   HK: undefined;
 };
 
@@ -22,18 +22,30 @@ export type TabTwoParamList = {
 };
 
 export type Message = {
-  ID: string
-  displayedName: string
-  content: string
-  signature: string
-  Correct: boolean
-  Color: string
-  MessageID: string
-  CreatedAt: string
-  DisplayedDate: string
-  Pod: string
-  authorBase64: string
-  authorPubKey: string
-  authorURLSafe: string
-  signatureBase64: string
+  ID: string;
+  displayedName: string;
+  content: string;
+  signature: string;
+  Correct: boolean;
+  Color: string;
+  MessageID: string;
+  CreatedAt: string;
+  DisplayedDate: string;
+  Pod: string;
+  authorBase64: string;
+  authorPubKey: string;
+  authorURLSafe: string;
+  signatureBase64: string;
+};
+
+export enum ListType {
+  All = "message",
+  User = "user",
+  Comments = "comments",
 }
+
+export type MessageOptions = {
+  sources: string[];
+  type: ListType;
+  arg?: string;
+};
