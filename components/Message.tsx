@@ -1,14 +1,26 @@
 import * as React from "react";
-import { Message } from "../types";
+import { ListType, Message, MessageOptions, TabTwoParamList } from "../types";
 import { Text, View } from "../components/Themed";
 import Sep from "../components/Separator";
 import { Pressable, StyleSheet } from "react-native";
+import { StackNavigationProp } from "@react-navigation/stack";
 
-const colorFromAuthor = (message: Message): string => {
-  return "blue";
+type ScoresScreenNavigationProp = StackNavigationProp<TabTwoParamList>;
+
+export type MessageCompProps = {
+  navigation: ScoresScreenNavigationProp;
+  message: Message;
 };
 
-export const MessageComp = ({ message }: { message: Message }) => {
+export const MessageComp = ({ message, navigation }: MessageCompProps) => {
+  // console.log("opt", options);
+
+  const onClickMessage = () => {
+    console.log("click to", message.ID);
+    navigation.navigate("Comments", {
+      messageId: message.ID,
+    });
+  };
   return (
     <View style={styles.main}>
       <View style={styles.content}>
@@ -32,7 +44,9 @@ export const MessageComp = ({ message }: { message: Message }) => {
             </Text>
           </View>
         </View>
-        <Text numberOfLines={6}>{message.content}</Text>
+        <Pressable onPress={onClickMessage}>
+          <Text numberOfLines={10}>{message.content}</Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -40,7 +54,7 @@ export const MessageComp = ({ message }: { message: Message }) => {
 
 const styles = StyleSheet.create({
   main: {
-    marginVertical: 4,
+    marginBottom: 8,
   },
   header: {},
   infos: {

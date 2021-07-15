@@ -3,6 +3,8 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
+import { CommentsRouteDeclaredProp } from "./screens/lists/comments";
+
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
@@ -15,10 +17,12 @@ export type BottomTabParamList = {
 
 export type TabOneParamList = {
   TabOneScreen: undefined;
+  Faq: undefined;
 };
 
 export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+  Messages: undefined;
+  Comments: CommentsRouteDeclaredProp;
 };
 
 export type Message = {
@@ -46,6 +50,6 @@ export enum ListType {
 
 export type MessageOptions = {
   sources: string[];
-  type: ListType;
+  type: ListType | string;
   arg?: string;
 };
