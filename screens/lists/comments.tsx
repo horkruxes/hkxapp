@@ -42,6 +42,7 @@ export default function Comments({ route, navigation }: CommentsProps) {
   useEffect(() => {
     getSoloMessage();
   }, []);
+
   return (
     <>
       {message && <MessageComp navigation={navigation} message={message} />}

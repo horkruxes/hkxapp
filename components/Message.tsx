@@ -1,7 +1,6 @@
 import * as React from "react";
 import { ListType, Message, MessageOptions, TabTwoParamList } from "../types";
 import { Text, View } from "../components/Themed";
-import Sep from "../components/Separator";
 import { Pressable, StyleSheet } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 

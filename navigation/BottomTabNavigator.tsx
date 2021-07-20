@@ -13,9 +13,16 @@ import useColorScheme from "../hooks/useColorScheme";
 import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import Faq from "../screens/info/faq";
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from "../types";
-import MessageList from "../components/MessageList";
+import {
+  BottomTabParamList,
+  TabOneParamList,
+  TabPostParamList,
+  TabKeysParamList,
+  TabTwoParamList,
+} from "../types";
 import Comments from "../screens/lists/comments";
+import TabPostScreen from "../screens/post/PostScreen";
+import TabKeysScreen from "../screens/keys/KeysScreen";
 
 const Tab = createMaterialTopTabNavigator<BottomTabParamList>();
 
@@ -40,6 +47,24 @@ export default function BottomTabNavigator() {
       <Tab.Screen
         name="HK"
         component={TabTwoNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="ios-code" color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Post"
+        component={TabPostNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="ios-code" color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Keys"
+        component={TabKeysNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="ios-code" color={color} />
@@ -96,5 +121,33 @@ function TabTwoNavigator() {
         options={{ headerTitle: "Comments" }}
       />
     </TabTwoStack.Navigator>
+  );
+}
+
+const TabPostStack = createStackNavigator<TabPostParamList>();
+
+function TabPostNavigator() {
+  return (
+    <TabPostStack.Navigator>
+      <TabPostStack.Screen
+        name="Post"
+        component={TabPostScreen}
+        options={{ headerTitle: "Post a message" }}
+      />
+    </TabPostStack.Navigator>
+  );
+}
+
+const TabKeysStack = createStackNavigator<TabKeysParamList>();
+
+function TabKeysNavigator() {
+  return (
+    <TabKeysStack.Navigator>
+      <TabKeysStack.Screen
+        name="Keys"
+        component={TabKeysScreen}
+        options={{ headerTitle: "Manage keys" }}
+      />
+    </TabKeysStack.Navigator>
   );
 }

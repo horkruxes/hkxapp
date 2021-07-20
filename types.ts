@@ -13,6 +13,8 @@ export type RootStackParamList = {
 export type BottomTabParamList = {
   Options: undefined;
   HK: undefined;
+  Post: undefined;
+  Keys: undefined;
 };
 
 export type TabOneParamList = {
@@ -23,6 +25,14 @@ export type TabOneParamList = {
 export type TabTwoParamList = {
   Messages: undefined;
   Comments: CommentsRouteDeclaredProp;
+};
+
+export type TabPostParamList = {
+  Post: undefined;
+};
+
+export type TabKeysParamList = {
+  Keys: undefined;
 };
 
 export type Message = {
