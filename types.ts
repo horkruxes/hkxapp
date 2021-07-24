@@ -15,6 +15,7 @@ export type BottomTabParamList = {
   HK: undefined;
   Post: undefined;
   Keys: undefined;
+  Sources: undefined;
 };
 
 export type TabOneParamList = {
@@ -33,6 +34,10 @@ export type TabPostParamList = {
 
 export type TabKeysParamList = {
   Keys: undefined;
+};
+
+export type TabSourcesParamList = {
+  Sources: undefined;
 };
 
 export type Message = {

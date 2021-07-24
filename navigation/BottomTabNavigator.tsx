@@ -19,9 +19,11 @@ import {
   TabPostParamList,
   TabKeysParamList,
   TabTwoParamList,
+  TabSourcesParamList,
 } from "../types";
 import Comments from "../screens/lists/comments";
 import TabPostScreen from "../screens/post/PostScreen";
+import TabSourcesScreen from "../screens/sources/SourcesScreen";
 import TabKeysScreen from "../screens/keys/KeysScreen";
 
 const Tab = createMaterialTopTabNavigator<BottomTabParamList>();
@@ -65,6 +67,15 @@ export default function BottomTabNavigator() {
       <Tab.Screen
         name="Keys"
         component={TabKeysNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="ios-code" color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Sources"
+        component={TabSourcesNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="ios-code" color={color} />
@@ -149,5 +160,19 @@ function TabKeysNavigator() {
         options={{ headerTitle: "Manage keys" }}
       />
     </TabKeysStack.Navigator>
+  );
+}
+
+const TabSourcesStack = createStackNavigator<TabSourcesParamList>();
+
+function TabSourcesNavigator() {
+  return (
+    <TabSourcesStack.Navigator>
+      <TabSourcesStack.Screen
+        name="Sources"
+        component={TabSourcesScreen}
+        options={{ headerTitle: "Manage sources" }}
+      />
+    </TabSourcesStack.Navigator>
   );
 }

@@ -3,6 +3,7 @@ import { ListType, Message, MessageOptions, TabTwoParamList } from "../types";
 import { Text, View } from "../components/Themed";
 import { Pressable, StyleSheet } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { verifier } from "../screens/keys/crypto";
 
 type ScoresScreenNavigationProp = StackNavigationProp<TabTwoParamList>;
 
@@ -25,6 +26,31 @@ export const MessageComp = ({ message, navigation }: MessageCompProps) => {
       <View style={styles.content}>
         <View style={styles.header}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
+            {verifier(
+              message.authorBase64,
+              message.content,
+              message.signatureBase64
+            ) ? (
+              <View
+                style={{
+                  height: 10,
+                  width: 10,
+                  borderRadius: 4,
+                  marginRight: 4,
+                  backgroundColor: "green",
+                }}
+              />
+            ) : (
+              <View
+                style={{
+                  height: 10,
+                  width: 10,
+                  borderRadius: 4,
+                  marginRight: 4,
+                  backgroundColor: "red",
+                }}
+              />
+            )}
             <View
               style={{
                 height: 10,
