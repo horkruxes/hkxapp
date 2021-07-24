@@ -21,9 +21,9 @@ const base64ToBytes = (b64: string): Buffer => {
 export function signer(
   secBase64: string,
   pubBase64: string,
-  msgAscii: string
+  msgUtf8: string
 ): string {
-  const msgToSign = Buffer.from(msgAscii, "ascii");
+  const msgToSign = Buffer.from(msgUtf8);
   const pub = base64ToBytes(pubBase64);
   const globalMessageToVerify = Buffer.concat([msgToSign, pub]);
 
@@ -33,11 +33,11 @@ export function signer(
 
 export function verifier(
   pubBase64: string,
-  msgAscii: string,
+  msgUtf8: string,
   sigBase64: string
 ): boolean {
   const pub = base64ToBytes(pubBase64); //"JL6zyYtrk43MZ+uV7J+y8HFS9MvkI2eZT1RbRnV4Qog=");
-  const msg = Buffer.from(msgAscii, "ascii");
+  const msg = Buffer.from(msgUtf8);
   const globalMessageToVerify = Buffer.concat([msg, pub]);
 
   const sig = base64ToBytes(sigBase64); //"yn8eSEyVUgBMC5d8rFES2d8XAlfDVgYNEu7hmCc/RNjNaut2jBPMEg0IBIasQoYH1r3G2t7m9ifdE+5vDY+OAQ=="
