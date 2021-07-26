@@ -1,6 +1,7 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import * as React from "react";
-import { Button, Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
+import { TextInput, Button } from "react-native-paper";
 
 import { Text, View } from "../components/Themed";
 import { TabOneParamList } from "../types";
@@ -14,7 +15,9 @@ type Props = {
 export default function TabOneScreen({ navigation }: Props) {
   return (
     <View style={styles.container}>
-      <Button title="FAQ" onPress={() => navigation.navigate("Faq")} />
+      <Button onPress={() => navigation.navigate("Faq")}>FAQ</Button>
+      <Button onPress={() => navigation.navigate("Faq")}>Manage keys</Button>
+      <Button onPress={() => navigation.navigate("Faq")}>Manage Sources</Button>
     </View>
   );
 }
