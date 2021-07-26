@@ -5,6 +5,7 @@ import * as ed from "noble-ed25519";
 import { ECDSA } from "@oliverne/easy-ecdsa";
 import b64 from "react-native-base64";
 import edd, { sign, verify } from "@stablelib/ed25519";
+import { Message } from "../types";
 
 export function testNoble() {
   // const privateKey = ed.utils.randomPrivateKey(); // crash
@@ -31,17 +32,12 @@ export function signer(
   return Buffer.from(sign(sec, globalMessageToVerify)).toString("base64");
 }
 
-export function verifier(
-  pubBase64: string,
-  msgUtf8: string,
-  sigBase64: string
-): boolean {
-  const pub = base64ToBytes(pubBase64); //"JL6zyYtrk43MZ+uV7J+y8HFS9MvkI2eZT1RbRnV4Qog=");
-  const msg = Buffer.from(msgUtf8);
-  const globalMessageToVerify = Buffer.concat([msg, pub]);
-
-  const sig = base64ToBytes(sigBase64); //"yn8eSEyVUgBMC5d8rFES2d8XAlfDVgYNEu7hmCc/RNjNaut2jBPMEg0IBIasQoYH1r3G2t7m9ifdE+5vDY+OAQ=="
-
+export function verifyOwnership(message: Message): boolean {
+  const pub = base64ToBytes(message.AuthorBase64);
+  const msg = Buffer.from(message.Content);
+  const name = Buffer.from(message.displayedName);
+  const globalMessageToVerify = Buffer.concat([msg, pub, name]);
+  const sig = base64ToBytes(message.SignatureBase64);
   return verify(pub, globalMessageToVerify, sig);
 }
 export function testing() {

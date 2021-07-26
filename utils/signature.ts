@@ -1,8 +1,5 @@
 import { Message } from "../types";
-
-export const verifySignature = (message: Message): boolean => {
-  return true;
-};
+import { verifyOwnership } from "./crypto";
 
 export const getColorFromAuthor = (author: string): string => {
   let h = 0;
@@ -10,14 +7,18 @@ export const getColorFromAuthor = (author: string): string => {
     h += author.charCodeAt(i);
   }
   const l = trueMod(h, 3) * 10 + 40; // light = 40, 50 or 60
-  h = trueMod(h, 360);
+  h = trueMod(h, 300) + 30;
   return `hsl(${h}, 80%, ${l}%)`;
 };
 
 export const cleanMessages = (messages: Message[]): Message[] => {
   return messages.map<Message>((msg) => {
-    msg.Correct = verifySignature(msg);
-    msg.Color = getColorFromAuthor(msg.authorBase64);
+    msg.Correct = verifyOwnership(msg);
+    if (msg.Correct) {
+      msg.Color = getColorFromAuthor(msg.AuthorBase64);
+    } else {
+      msg.Color = "red";
+    }
 
     return msg;
   });
