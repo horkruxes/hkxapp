@@ -22,6 +22,7 @@ export type BottomTabParamList = {
 export type TabOneParamList = {
   TabOneScreen: undefined;
   Faq: undefined;
+  Keys: undefined;
 };
 
 export type TabTwoParamList = {
@@ -32,10 +33,6 @@ export type TabTwoParamList = {
 
 export type TabPostParamList = {
   Post: undefined;
-};
-
-export type TabKeysParamList = {
-  Keys: undefined;
 };
 
 export type TabSourcesParamList = {

@@ -17,7 +17,6 @@ import {
   BottomTabParamList,
   TabOneParamList,
   TabPostParamList,
-  TabKeysParamList,
   TabTwoParamList,
   TabSourcesParamList,
 } from "../types";
@@ -66,15 +65,6 @@ export default function BottomTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Keys"
-        component={TabKeysNavigator}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="Sources"
         component={TabSourcesNavigator}
         options={{
@@ -112,6 +102,11 @@ function TabOneNavigator() {
         name="Faq"
         component={Faq}
         options={{ headerTitle: "FAQ" }}
+      />
+      <TabOneStack.Screen
+        name="Keys"
+        component={TabKeysScreen}
+        options={{ headerTitle: "Manage keys" }}
       />
     </TabOneStack.Navigator>
   );
@@ -152,20 +147,6 @@ function TabPostNavigator() {
         options={{ headerTitle: "Post a message" }}
       />
     </TabPostStack.Navigator>
-  );
-}
-
-const TabKeysStack = createStackNavigator<TabKeysParamList>();
-
-function TabKeysNavigator() {
-  return (
-    <TabKeysStack.Navigator>
-      <TabKeysStack.Screen
-        name="Keys"
-        component={TabKeysScreen}
-        options={{ headerTitle: "Manage keys" }}
-      />
-    </TabKeysStack.Navigator>
   );
 }
 

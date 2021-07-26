@@ -15,7 +15,7 @@ export default function TabPostScreen({ navigation }: Props) {
 
   return (
     <>
-      <Text>Hi</Text>
+      <Text>Hidwadwdaldka dwad awdadwad addw</Text>
       <TextInput onChangeText={onChangeText} value={text} />
     </>
   );

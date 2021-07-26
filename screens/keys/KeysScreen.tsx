@@ -3,7 +3,14 @@ import { TabTwoParamList } from "../../types";
 import * as React from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { Text, View } from "../../components/Themed";
-import { TextInput, Button } from "react-native-paper";
+import {
+  TextInput,
+  Button,
+  Card,
+  Title,
+  Paragraph,
+  FAB,
+} from "react-native-paper";
 import elliptic, { eddsa as EdDSA } from "elliptic";
 import * as Random from "expo-random";
 import {
@@ -19,14 +26,18 @@ type Props = {
 
 export default function KeysManagementScreen({ navigation }: Props) {
   const [text, onChangeText] = React.useState("");
+  const [givenPub64, setGivenPub64] = React.useState("");
+  const [givenSec64, setGivenSec64] = React.useState("");
   const [keyPairs, setKeys] = React.useState<KeyPairHK[]>([]);
   const keyGen = async () => {
-    genKeyPairAndStore(text);
+    await genKeyPairAndStore(text, givenSec64, givenPub64);
     getKeyPairs();
   };
 
   const getKeyPairs = async () => {
     const keyPairs = await loadKeyPairsFromStorage();
+    setGivenPub64("");
+    setGivenSec64("");
     setKeys(keyPairs);
   };
 
@@ -38,11 +49,25 @@ export default function KeysManagementScreen({ navigation }: Props) {
     <>
       <View style={styles.newKeyPair}>
         <TextInput
-          label="name"
+          label="Name or nickname"
           mode="outlined"
           onChangeText={onChangeText}
           value={text}
-          placeholder="Enter a name for your new key pair"
+          placeholder="Your name or nickname"
+        />
+        <TextInput
+          label="Secret Key"
+          mode="outlined"
+          onChangeText={setGivenSec64}
+          value={givenSec64}
+          placeholder="Secret key (leave empty to generate one)"
+        />
+        <TextInput
+          label="Prublic Key"
+          mode="outlined"
+          onChangeText={setGivenPub64}
+          value={givenPub64}
+          placeholder="Public key (leave empty to generate one)"
         />
         <Button onPress={keyGen}> Add a new Key pair</Button>
       </View>
@@ -51,7 +76,20 @@ export default function KeysManagementScreen({ navigation }: Props) {
         keyExtractor={(item) => item.PublicBase64}
         renderItem={({ item }: { item: KeyPairHK }) => (
           <>
-            <Text>{item.PrivateBase64}</Text>
+            <Card style={{ marginVertical: 4 }}>
+              <Card.Title title={item.Name} />
+              <Card.Content>
+                <Paragraph>
+                  <Text style={styles.bold}>Public Key </Text>
+                  {item.PublicBase64}
+                </Paragraph>
+
+                <Paragraph>
+                  <Text style={styles.bold}> Private Key </Text>
+                  {item.PrivateBase64}
+                </Paragraph>
+              </Card.Content>
+            </Card>
           </>
         )}
       />
@@ -63,5 +101,8 @@ const styles = StyleSheet.create({
   main: {},
   newKeyPair: {
     padding: 12,
+  },
+  bold: {
+    fontWeight: "bold",
   },
 });

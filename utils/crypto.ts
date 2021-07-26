@@ -38,21 +38,31 @@ export function testing() {
   console.log("key pair", kp);
 }
 
-export const genKeyPairAndStore = async (name: string) => {
-  console.log("generating...");
+export const genKeyPairAndStore = async (
+  name: string,
+  givenSec: string,
+  givenPub: string
+) => {
+  let sec = givenSec;
+  let pub = givenPub;
 
-  const sec2 = Random.getRandomBytes(32);
-  console.log("random bytes got.");
+  if (givenPub == "" || givenSec == "") {
+    console.log("generating...");
 
-  const kp = edd.generateKeyPair();
-  console.log("generated.");
+    const sec2 = Random.getRandomBytes(32);
+    console.log("random bytes got.");
 
-  // const pub2 = edd.extractPublicKeyFromSecretKey(sec2);
-  console.log("extracted");
+    const kp = edd.generateKeyPair();
+    console.log("generated.");
 
-  const sec = bytesToBase64(kp.secretKey);
-  const pub = bytesToBase64(kp.publicKey);
-  const keyPair = {
+    // const pub2 = edd.extractPublicKeyFromSecretKey(sec2);
+    console.log("extracted");
+
+    sec = bytesToBase64(kp.secretKey);
+    pub = bytesToBase64(kp.publicKey);
+  }
+
+  const keyPair: KeyPairHK = {
     PrivateBase64: sec,
     PublicBase64: pub, // Used as id
     Name: name,
@@ -60,8 +70,9 @@ export const genKeyPairAndStore = async (name: string) => {
 
   const keyPairs = await loadKeyPairsFromStorage();
   keyPairs.push(keyPair);
+  console.log("adding key", keyPair.PublicBase64);
 
-  SecureStore.setItemAsync("keyPairs", JSON.stringify(keyPairs));
+  await SecureStore.setItemAsync("keyPairs", JSON.stringify(keyPairs));
 };
 
 export const loadKeyPairsFromStorage = async (): Promise<KeyPairHK[]> => {
