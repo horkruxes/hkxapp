@@ -1,21 +1,38 @@
 import * as React from "react";
-import { ListType, Message, MessageOptions, TabTwoParamList } from "../types";
-import { Text, View } from "../components/Themed";
+import {
+  ListType,
+  Message,
+  MessageOptions,
+  TabTwoParamList,
+} from "../../types";
+import { Text, View } from "../Themed";
 import { Pressable, StyleSheet } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { verifier } from "../screens/keys/crypto";
+import { verifyOwnership } from "../../utils/crypto";
 
 type ScoresScreenNavigationProp = StackNavigationProp<TabTwoParamList>;
 
 export type MessageCompProps = {
   navigation: ScoresScreenNavigationProp;
   message: Message;
+  fullText?: boolean;
 };
 
-export const MessageComp = ({ message, navigation }: MessageCompProps) => {
+export const MessageComp = ({
+  message,
+  navigation,
+  fullText,
+}: MessageCompProps) => {
   // console.log("opt", options);
 
   const onClickMessage = () => {
+    console.log("click to", message.ID);
+    navigation.navigate("Comments", {
+      messageId: message.ID,
+    });
+  };
+
+  const onClickAuthor = () => {
     console.log("click to", message.ID);
     navigation.navigate("Comments", {
       messageId: message.ID,
@@ -25,32 +42,13 @@ export const MessageComp = ({ message, navigation }: MessageCompProps) => {
     <View style={styles.main}>
       <View style={styles.content}>
         <View style={styles.header}>
+          {!message.Correct && (
+            <Text style={styles.wrongSignatureWarning}>
+              Incorrect signature. The message might have been corrupted on the
+              database.
+            </Text>
+          )}
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            {verifier(
-              message.authorBase64,
-              message.content,
-              message.signatureBase64
-            ) ? (
-              <View
-                style={{
-                  height: 10,
-                  width: 10,
-                  borderRadius: 4,
-                  marginRight: 4,
-                  backgroundColor: "green",
-                }}
-              />
-            ) : (
-              <View
-                style={{
-                  height: 10,
-                  width: 10,
-                  borderRadius: 4,
-                  marginRight: 4,
-                  backgroundColor: "red",
-                }}
-              />
-            )}
             <View
               style={{
                 height: 10,
@@ -61,16 +59,27 @@ export const MessageComp = ({ message, navigation }: MessageCompProps) => {
               }}
             />
             <Text style={styles.msgAuthor}>{message.displayedName}</Text>
-            <Text style={styles.infos}>on {message.Pod}</Text>
+            {!fullText && (
+              <Text style={styles.infos}>
+                {message.AuthorBase64.substr(0, 10)}
+              </Text>
+            )}
           </View>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text numberOfLines={1} style={styles.infos}>
-              {message.authorBase64}
+          {fullText && (
+            <Text>
+              {!message.Correct && "❌"}
+              <Text style={styles.infos}>{message.AuthorBase64}</Text>
             </Text>
+          )}
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={styles.infos}>{message.CreatedAt.substr(0, 10)}</Text>
+            <Text style={styles.infos}> on {message.Pod}</Text>
           </View>
         </View>
         <Pressable onPress={onClickMessage}>
-          <Text numberOfLines={10}>{message.content}</Text>
+          <Text numberOfLines={fullText ? undefined : 10}>
+            {message.Content}
+          </Text>
         </Pressable>
       </View>
     </View>
@@ -84,6 +93,10 @@ const styles = StyleSheet.create({
   header: {},
   infos: {
     color: "#888",
+    fontStyle: "italic",
+  },
+  wrongSignatureWarning: {
+    color: "red",
     fontStyle: "italic",
   },
   content: {

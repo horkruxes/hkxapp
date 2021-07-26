@@ -43,18 +43,16 @@ export type TabSourcesParamList = {
 export type Message = {
   ID: string;
   displayedName: string;
-  content: string;
-  signature: string;
+  Content: string;
   Correct: boolean;
   Color: string;
   MessageID: string;
   CreatedAt: string;
   DisplayedDate: string;
   Pod: string;
-  authorBase64: string;
-  authorPubKey: string;
+  AuthorBase64: string;
   authorURLSafe: string;
-  signatureBase64: string;
+  SignatureBase64: string;
 };
 
 export enum ListType {
