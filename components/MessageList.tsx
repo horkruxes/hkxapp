@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { Text, View } from "../components/Themed";
 import { ListType, Message, MessageOptions, TabTwoParamList } from "../types";
-import { MessageComp } from "../components/Message";
+import { MessageComp } from "./message/Message";
 import { loadMessages } from "../utils/dataLoading";
 import { StackNavigationProp } from "@react-navigation/stack";
 
@@ -39,7 +39,11 @@ export default function MessageList({ options, navigation }: MessageListProps) {
         }
         keyExtractor={(item) => item.ID}
         renderItem={({ item: msg }: { item: Message }) => (
-          <MessageComp message={msg} navigation={navigation} />
+          <MessageComp
+            message={msg}
+            navigation={navigation}
+            fullText={options.type === ListType.Comments}
+          />
         )}
       />
     </View>

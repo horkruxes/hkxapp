@@ -15,11 +15,7 @@ type Props = {
 };
 
 export default function TabTwoScreen({ navigation }: Props) {
-  let [sources, setSources] = useState<string[]>([
-    "horkruxes.amethysts.studio",
-    "hk.quimerch.com",
-    "fr.hk.quimerch.com",
-  ]);
+  let [sources, setSources] = useState<string[]>(["test.hk.quimerch.com"]);
   let [type, setType] = useState<ListType>(ListType.All);
   let [arg, setArg] = useState("");
 

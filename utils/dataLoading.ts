@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Message, MessageOptions } from "../types";
+import { ListType, Message, MessageOptions } from "../types";
 import { cleanMessages } from "./signature";
 
 // Loads message from https://source/api/xxx/arg
@@ -9,6 +9,16 @@ export const loadMessages = async ({
   arg,
 }: MessageOptions): Promise<Message[]> => {
   let responses: Message[] = [];
+  if (arg) {
+    if (type === ListType.Comments) {
+      const msg = await loadSingleMessage({
+        sources,
+        id: arg,
+      });
+      responses.push(msg);
+    } else if (type === ListType.User) {
+    }
+  }
   await Promise.all(
     sources.map(async (source) => {
       const url = `https://${source}/api/${type}/${arg ?? ""}`;

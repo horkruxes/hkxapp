@@ -5,7 +5,7 @@ import { Message, MessageOptions, TabTwoParamList } from "../../types";
 import MessageList from "../../components/MessageList";
 import { ListType } from "../../types";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { MessageComp } from "../../components/Message";
+import { MessageComp } from "../../components/message/Message";
 import { loadSingleMessage } from "../../utils/dataLoading";
 import { RouteProp } from "@react-navigation/native";
 
@@ -28,25 +28,11 @@ export default function Comments({ route, navigation }: CommentsProps) {
     "horkruxes.amethysts.studio",
     "hk.quimerch.com",
     "fr.hk.quimerch.com",
+    "test.hk.quimerch.com",
   ];
-
-  const getSoloMessage = async () => {
-    const msg = await loadSingleMessage({
-      sources: baseSources,
-      id: route.params.messageId,
-    });
-    console.log("set msg", msg);
-    setMessage(msg);
-  };
-
-  useEffect(() => {
-    getSoloMessage();
-  }, []);
 
   return (
     <>
-      {message && <MessageComp navigation={navigation} message={message} />}
-
       <MessageList
         navigation={navigation}
         options={{
