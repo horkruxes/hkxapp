@@ -25,6 +25,7 @@ import Comments from "../screens/lists/comments";
 import TabPostScreen from "../screens/post/PostScreen";
 import TabSourcesScreen from "../screens/sources/SourcesScreen";
 import TabKeysScreen from "../screens/keys/KeysScreen";
+import AuthorMessages from "../screens/lists/author";
 
 const Tab = createMaterialTopTabNavigator<BottomTabParamList>();
 
@@ -130,6 +131,11 @@ function TabTwoNavigator() {
         name="Comments"
         component={Comments}
         options={{ headerTitle: "Comments" }}
+      />
+      <TabTwoStack.Screen
+        name="Author"
+        component={AuthorMessages}
+        options={{ headerTitle: "Author" }}
       />
     </TabTwoStack.Navigator>
   );

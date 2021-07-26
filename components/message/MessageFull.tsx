@@ -23,12 +23,10 @@ type MessageFullProps = {
 };
 
 export const MessageFull = ({ message, navigation }: MessageFullProps) => {
-  // console.log("opt", options);
-
   const onClickAuthor = () => {
-    console.log("click to", message.ID);
-    navigation.navigate("Comments", {
-      messageId: message.ID,
+    console.log("click to author", message.AuthorBase64);
+    navigation.navigate("Author", {
+      userIdBase64: message.AuthorBase64,
     });
   };
   return (

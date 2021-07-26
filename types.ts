@@ -3,6 +3,7 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
+import { AuthorMessagesRouteDeclaredProp } from "./screens/lists/author";
 import { CommentsRouteDeclaredProp } from "./screens/lists/comments";
 
 export type RootStackParamList = {
@@ -26,6 +27,7 @@ export type TabOneParamList = {
 export type TabTwoParamList = {
   Messages: undefined;
   Comments: CommentsRouteDeclaredProp;
+  Author: AuthorMessagesRouteDeclaredProp;
 };
 
 export type TabPostParamList = {

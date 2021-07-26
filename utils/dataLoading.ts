@@ -17,6 +17,7 @@ export const loadMessages = async ({
       });
       responses.push(msg);
     } else if (type === ListType.User) {
+      arg = base64ToSafeURL(arg);
     }
   }
   await Promise.all(
@@ -29,7 +30,6 @@ export const loadMessages = async ({
       responses = responses.concat(response.data);
     })
   );
-  console.log("ifnished", responses);
 
   const newMessages = cleanMessages(responses);
   return newMessages;
@@ -61,4 +61,8 @@ export const loadSingleMessage = async ({
 
   const newMessages = cleanMessages(responses);
   return newMessages[0];
+};
+
+const base64ToSafeURL = (b64: string): string => {
+  return b64.replace(/\+/g, ".").replace(/\//g, "-").replace(/\+/g, "_");
 };
