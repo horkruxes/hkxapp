@@ -27,10 +27,18 @@ export const loadMessages = async ({
       .map(async (source) => {
         const url = `https://${source.url}/api/${type}/${arg ?? ""}`;
         console.log("getting from", url);
-        const response = await axios.get<Message[]>(url, {
-          headers: { "Content-Type": "application/json" },
-        });
-        responses = responses.concat(response.data);
+        try {
+          const response = await axios.get<Message[]>(url, {
+            headers: { "Content-Type": "application/json" },
+          });
+          responses = responses.concat(
+            response.data.map<Message>((msg) => {
+              return { ...msg, Pod: source.url };
+            })
+          );
+        } catch {
+          console.log("WRONG REQUEST", source.url);
+        }
       })
   );
 

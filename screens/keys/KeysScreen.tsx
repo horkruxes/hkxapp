@@ -64,7 +64,7 @@ export default function KeysManagementScreen({ navigation }: Props) {
           placeholder="Secret key (leave empty to generate one)"
         />
         <TextInput
-          label="Prublic Key"
+          label="Public Key"
           mode="outlined"
           onChangeText={setGivenPub64}
           value={givenPub64}
