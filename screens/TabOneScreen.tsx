@@ -15,9 +15,13 @@ type Props = {
 export default function TabOneScreen({ navigation }: Props) {
   return (
     <View style={styles.container}>
-      <Button onPress={() => navigation.navigate("Faq")}>FAQ</Button>
-      <Button onPress={() => navigation.navigate("Keys")}>Manage keys</Button>
-      <Button onPress={() => navigation.navigate("Keys")}>
+      <Button mode="outlined" onPress={() => navigation.navigate("Faq")}>
+        FAQ
+      </Button>
+      <Button mode="contained" onPress={() => navigation.navigate("Keys")}>
+        Manage keys
+      </Button>
+      <Button onPress={() => navigation.navigate("Sources")}>
         Manage Sources
       </Button>
     </View>

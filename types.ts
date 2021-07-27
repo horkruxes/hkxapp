@@ -5,6 +5,7 @@
 
 import { AuthorMessagesRouteDeclaredProp } from "./screens/lists/author";
 import { CommentsRouteDeclaredProp } from "./screens/lists/comments";
+import { SourcesHK } from "./utils/sources";
 
 export type RootStackParamList = {
   Root: undefined;
@@ -23,6 +24,7 @@ export type TabOneParamList = {
   TabOneScreen: undefined;
   Faq: undefined;
   Keys: undefined;
+  Sources: undefined;
 };
 
 export type TabTwoParamList = {
@@ -61,7 +63,7 @@ export enum ListType {
 }
 
 export type MessageOptions = {
-  sources: string[];
+  sources: SourcesHK[];
   type: ListType | string;
   arg?: string;
 };

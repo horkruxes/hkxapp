@@ -8,6 +8,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { MessageComp } from "../../components/message/Message";
 import { loadSingleMessage } from "../../utils/dataLoading";
 import { RouteProp } from "@react-navigation/native";
+import { useStateContext } from "../../state/state";
 
 type CommentsNavigationProp = StackNavigationProp<TabTwoParamList>;
 
@@ -23,20 +24,15 @@ export type CommentsProps = {
 };
 
 export default function Comments({ route, navigation }: CommentsProps) {
-  let [message, setMessage] = useState<Message>();
-  const baseSources = [
-    "horkruxes.amethysts.studio",
-    "hk.quimerch.com",
-    "fr.hk.quimerch.com",
-    "test.hk.quimerch.com",
-  ];
+  const { state, dispatch } = useStateContext();
+  const { sources } = state;
 
   return (
     <>
       <MessageList
         navigation={navigation}
         options={{
-          sources: baseSources,
+          sources,
           type: ListType.Comments,
           arg: route.params.messageId,
         }}

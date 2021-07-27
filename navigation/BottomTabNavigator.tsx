@@ -108,6 +108,11 @@ function TabOneNavigator() {
         component={TabKeysScreen}
         options={{ headerTitle: "Manage keys" }}
       />
+      <TabOneStack.Screen
+        name="Sources"
+        component={TabSourcesScreen}
+        options={{ headerTitle: "Sources" }}
+      />
     </TabOneStack.Navigator>
   );
 }
@@ -158,7 +163,7 @@ function TabSourcesNavigator() {
       <TabSourcesStack.Screen
         name="Sources"
         component={TabSourcesScreen}
-        options={{ headerTitle: "Manage sources" }}
+        options={{ headerTitle: "Sources" }}
       />
     </TabSourcesStack.Navigator>
   );

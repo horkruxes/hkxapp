@@ -29,15 +29,16 @@ export default function KeysManagementScreen({ navigation }: Props) {
   const [givenPub64, setGivenPub64] = React.useState("");
   const [givenSec64, setGivenSec64] = React.useState("");
   const [keyPairs, setKeys] = React.useState<KeyPairHK[]>([]);
+
   const keyGen = async () => {
     await genKeyPairAndStore(text, givenSec64, givenPub64);
+    setGivenPub64("");
+    setGivenSec64("");
     getKeyPairs();
   };
 
   const getKeyPairs = async () => {
     const keyPairs = await loadKeyPairsFromStorage();
-    setGivenPub64("");
-    setGivenSec64("");
     setKeys(keyPairs);
   };
 

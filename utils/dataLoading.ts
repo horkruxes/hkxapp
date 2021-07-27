@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ListType, Message, MessageOptions } from "../types";
 import { cleanMessages } from "./signature";
+import { SourcesHK } from "./sources";
 
 // Loads message from https://source/api/xxx/arg
 export const loadMessages = async ({
@@ -21,14 +22,16 @@ export const loadMessages = async ({
     }
   }
   await Promise.all(
-    sources.map(async (source) => {
-      const url = `https://${source}/api/${type}/${arg ?? ""}`;
-      console.log("getting from", url);
-      const response = await axios.get<Message[]>(url, {
-        headers: { "Content-Type": "application/json" },
-      });
-      responses = responses.concat(response.data);
-    })
+    sources
+      .filter((source) => source.enabled)
+      .map(async (source) => {
+        const url = `https://${source.url}/api/${type}/${arg ?? ""}`;
+        console.log("getting from", url);
+        const response = await axios.get<Message[]>(url, {
+          headers: { "Content-Type": "application/json" },
+        });
+        responses = responses.concat(response.data);
+      })
   );
 
   const newMessages = cleanMessages(responses);
@@ -39,13 +42,13 @@ export const loadSingleMessage = async ({
   sources,
   id,
 }: {
-  sources: string[];
+  sources: SourcesHK[];
   id: string;
 }): Promise<Message> => {
   let responses: Message[] = [];
   await Promise.all(
     sources.map(async (source) => {
-      const url = `https://${source}/api/message/${id}`;
+      const url = `https://${source.url}/api/message/${id}`;
       console.log("getting SINGLE MESSAGE from", url);
 
       try {
