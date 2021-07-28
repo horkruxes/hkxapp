@@ -28,7 +28,7 @@ export default function MessageList({ options, navigation }: MessageListProps) {
 
   useEffect(() => {
     getOnlineData();
-  }, []);
+  }, [options]);
 
   const defaultMessage: Message = {
     ID: "0",
@@ -36,7 +36,7 @@ export default function MessageList({ options, navigation }: MessageListProps) {
     Color: "#0000",
     Correct: true,
     AuthorBase64: "",
-    SignatureBase64: "test",
+    SignatureBase64: "",
     Pod: "",
     displayedName: "Info",
     MessageID: "",
