@@ -30,21 +30,6 @@ export const MessageComp = ({
   navigation,
   fullText,
 }: MessageCompProps) => {
-  // console.log("opt", options);
-
-  const onClickMessage = () => {
-    console.log("click to", message.ID);
-    navigation.navigate("Comments", {
-      messageId: message.ID,
-    });
-  };
-
-  const onClickAuthor = () => {
-    console.log("click to", message.ID);
-    navigation.navigate("Comments", {
-      messageId: message.ID,
-    });
-  };
   if (fullText) {
     return <MessageFull message={message} navigation={navigation} />;
   } else {

@@ -64,15 +64,6 @@ export default function BottomTabNavigator() {
           ),
         }}
       />
-      <Tab.Screen
-        name="Sources"
-        component={TabSourcesNavigator}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
-          ),
-        }}
-      />
     </Tab.Navigator>
   );
 }
@@ -152,19 +143,5 @@ function TabPostNavigator() {
         options={{ headerTitle: "Post a message" }}
       />
     </TabPostStack.Navigator>
-  );
-}
-
-const TabSourcesStack = createStackNavigator<TabSourcesParamList>();
-
-function TabSourcesNavigator() {
-  return (
-    <TabSourcesStack.Navigator>
-      <TabSourcesStack.Screen
-        name="Sources"
-        component={TabSourcesScreen}
-        options={{ headerTitle: "Sources" }}
-      />
-    </TabSourcesStack.Navigator>
   );
 }

@@ -30,10 +30,25 @@ export default function MessageList({ options, navigation }: MessageListProps) {
     getOnlineData();
   }, []);
 
+  const defaultMessage: Message = {
+    ID: "0",
+    Content: "No message yet! Add a new source or activate one of them!",
+    Color: "#0000",
+    Correct: true,
+    AuthorBase64: "",
+    SignatureBase64: "test",
+    Pod: "",
+    displayedName: "Info",
+    MessageID: "",
+    CreatedAt: "",
+    DisplayedDate: "",
+    authorURLSafe: "",
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
-        data={messages}
+        data={messages?.length > 0 ? messages : [defaultMessage]}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={getOnlineData} />
         }

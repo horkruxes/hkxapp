@@ -13,7 +13,11 @@ import {
   Checkbox,
 } from "react-native-paper";
 
-import { addSource, getSources, SourcesHK } from "../../utils/sources";
+import {
+  addSourceStorage,
+  SourcesHK,
+  toggleSourceStorage,
+} from "../../utils/sources";
 import { useStateContext } from "../../state/state";
 import { ActionType } from "../../state/reducer";
 
@@ -29,11 +33,20 @@ export default function TabSourcesScreen({ navigation }: Props) {
   const { state, dispatch } = useStateContext();
   const { sources } = state;
 
-  const addSourceUrl = async () => {
-    addSource(url);
+  const addSource = async () => {
+    addSourceStorage(url);
     dispatch({
       type: ActionType.ADD_SOURCE,
-      payload: url.toLowerCase().trim(),
+      payload: [{ url: url.toLowerCase().trim(), enabled: true }],
+    });
+    setUrl("");
+  };
+
+  const toggleSource = async (url: string) => {
+    toggleSourceStorage(url);
+    dispatch({
+      type: ActionType.TOGGLE_SOURCE,
+      payload: [{ url, enabled: true }],
     });
   };
 
@@ -46,7 +59,7 @@ export default function TabSourcesScreen({ navigation }: Props) {
           onChangeText={setUrl}
           value={url}
         />
-        <Button onPress={addSourceUrl}>Add a new source</Button>
+        <Button onPress={addSource}>Add a new source</Button>
       </View>
       <FlatList
         data={sources}
@@ -57,12 +70,7 @@ export default function TabSourcesScreen({ navigation }: Props) {
               <Checkbox.Item
                 label={item.url}
                 status={item.enabled ? "checked" : "unchecked"}
-                onPress={() =>
-                  dispatch({
-                    type: ActionType.TOGGLE_SOURCE,
-                    payload: item.url,
-                  })
-                }
+                onPress={() => toggleSource(item.url)}
               />
             </Card>
           </>

@@ -53,8 +53,8 @@ export const MessageFull = ({ message, navigation }: MessageFullProps) => {
           </View>
 
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={styles.infos}> on {message.Pod}</Text>
             <Text style={styles.infos}>{message.CreatedAt.substr(0, 10)}</Text>
+            <Text style={styles.infos}> on {message.Pod}</Text>
           </View>
           <TouchableHighlight
             activeOpacity={0.6}
