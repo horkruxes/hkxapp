@@ -15,11 +15,13 @@ const base64ToBytes = (b64: string): Buffer => {
 export function signer(
   secBase64: string,
   pubBase64: string,
+  displayedNameUtf8: string,
   msgUtf8: string
 ): string {
   const msgToSign = Buffer.from(msgUtf8);
   const pub = base64ToBytes(pubBase64);
-  const globalMessageToVerify = Buffer.concat([msgToSign, pub]);
+  const displayedName = base64ToBytes(displayedNameUtf8);
+  const globalMessageToVerify = Buffer.concat([msgToSign, pub, displayedName]);
 
   const sec = base64ToBytes(secBase64);
   return Buffer.from(sign(sec, globalMessageToVerify)).toString("base64");
