@@ -1,17 +1,23 @@
 import Realm from "realm";
-const Cat = {
-  name: "Message",
-  properties: {
-    _id: "objectId",
-    name: "string",
-    age: "int",
-    type: "string",
-  },
+import { Message } from "../types";
+const { UUID } = Realm.BSON;
+
+export const addMessageToRealm = async (msg: Message): Promise<boolean> => {
+  const realm = await Realm.open({
+    schema: [Message.schema],
+  });
+  realm.write(() => {
+    realm.create("Profile", {
+      ...msg,
+    });
+  });
+  return true;
 };
 
-const nothing = async () => {
-  // open a local realm with the 'Cat' schema
+export const getMessagesFromRealm = async (): Promise<(Message & Object)[]> => {
   const realm = await Realm.open({
-    schema: [Cat],
+    schema: [Message.schema],
   });
+  const m = realm.objects<Message>("Message");
+  return m.map((o) => new Message(o));
 };
