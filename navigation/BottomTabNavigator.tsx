@@ -18,13 +18,14 @@ import {
   TabOneParamList,
   TabPostParamList,
   TabTwoParamList,
-  TabSourcesParamList,
+  TabTestParamList,
 } from "../types";
 import Comments from "../screens/lists/comments";
 import TabPostScreen from "../screens/post/PostScreen";
 import TabSourcesScreen from "../screens/sources/SourcesScreen";
 import TabKeysScreen from "../screens/keys/KeysScreen";
 import AuthorMessages from "../screens/lists/author";
+import TabTestScreen from "../screens/test";
 
 const Tab = createMaterialTopTabNavigator<BottomTabParamList>();
 
@@ -62,6 +63,15 @@ export default function BottomTabNavigator() {
       <Tab.Screen
         name="Post"
         component={TabPostNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="ios-code" color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Test"
+        component={TabTestNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="ios-code" color={color} />
@@ -147,5 +157,19 @@ function TabPostNavigator() {
         options={{ headerTitle: "Post a message" }}
       />
     </TabPostStack.Navigator>
+  );
+}
+
+const TabTestStack = createStackNavigator<TabTestParamList>();
+
+function TabTestNavigator() {
+  return (
+    <TabTestStack.Navigator>
+      <TabTestStack.Screen
+        name="Test"
+        component={TabTestScreen}
+        options={{ headerTitle: "Tests" }}
+      />
+    </TabTestStack.Navigator>
   );
 }

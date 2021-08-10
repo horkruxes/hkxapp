@@ -16,8 +16,7 @@ export type BottomTabParamList = {
   Options: undefined;
   HK: undefined;
   Post: undefined;
-  Keys: undefined;
-  Sources: undefined;
+  Test: undefined;
 };
 
 export type TabOneParamList = {
@@ -37,24 +36,51 @@ export type TabPostParamList = {
   Post: undefined;
 };
 
-export type TabSourcesParamList = {
-  Sources: undefined;
+export type TabTestParamList = {
+  Test: undefined;
 };
 
-export type Message = {
-  ID: string;
-  displayedName: string;
-  Content: string;
-  Correct: boolean;
-  Color: string;
-  MessageID: string;
-  CreatedAt: string;
-  DisplayedDate: string;
-  Pod: string;
-  AuthorBase64: string;
-  authorURLSafe: string;
-  SignatureBase64: string;
-};
+export class Message {
+  public static schema: Realm.ObjectSchema = {
+    name: "Message",
+    primaryKey: "id",
+    properties: {
+      ID: "string",
+      displayedName: "string",
+      Content: "string",
+      Correct: "booleanstring",
+      Color: "string",
+      MessageID: "string",
+      CreatedAt: "string",
+      DisplayedDate: "string",
+      Pod: "string",
+      AuthorBase64: "string",
+      authorURLSafe: "string",
+      SignatureBase64: "string",
+    },
+  };
+
+  // Got from API: sensible
+  public ID: string = "";
+  public displayedName: string = "";
+  public Content: string = "";
+  public MessageID: string = "";
+  public CreatedAt: string = "";
+  public AuthorBase64: string = "";
+  public SignatureBase64: string = "";
+  public Pod: string = "";
+
+  // Local
+  public authorURLSafe: string = "";
+  public Color: string = "";
+  public Correct: boolean = false;
+  public DisplayedDate: string = "";
+  public saved: boolean = false;
+
+  public constructor(init?: Partial<Message>) {
+    Object.assign(this, init);
+  }
+}
 
 export enum ListType {
   All = "message",

@@ -5,9 +5,6 @@ import { FlatList, Pressable, ScrollView, StyleSheet } from "react-native";
 import { Text, View } from "../../components/Themed";
 import {
   Button,
-  Card,
-  Title,
-  Paragraph,
   FAB,
   TextInput,
   RadioButton,
