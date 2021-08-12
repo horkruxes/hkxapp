@@ -2,7 +2,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { TabTwoParamList } from "../../types";
 import * as React from "react";
 import { Text, View } from "../../components/Themed";
-import { FlatList, SafeAreaView, StyleSheet } from "react-native";
+import { FlatList, Pressable, SafeAreaView, StyleSheet } from "react-native";
 import {
   TextInput,
   Button,
@@ -15,11 +15,16 @@ import {
 
 import {
   addSourceStorage,
+  deleteAllSourceStorage,
+  deleteSourceStorage,
   SourceHK,
   toggleSourceStorage,
 } from "../../utils/sources";
 import { useStateContext } from "../../state/state";
 import { ActionType } from "../../state/reducer";
+import { Feather } from "@expo/vector-icons";
+import useColorScheme from "../../hooks/useColorScheme";
+import Colors from "../../constants/Colors";
 
 type ScoresScreenNavigationProp = StackNavigationProp<TabTwoParamList>;
 
@@ -29,9 +34,11 @@ type Props = {
 
 export default function TabSourcesScreen({ navigation }: Props) {
   const [url, setUrl] = React.useState("");
-
+  const [URLInput, toggleURLInput] = React.useState(true);
   const { state, dispatch } = useStateContext();
   const { sources } = state;
+
+  const colorScheme = useColorScheme();
 
   const addSource = async () => {
     addSourceStorage(url);
@@ -50,33 +57,100 @@ export default function TabSourcesScreen({ navigation }: Props) {
     });
   };
 
+  const removeSource = async (url: string) => {
+    deleteSourceStorage(url);
+    dispatch({
+      type: ActionType.REMOVE_SOURCE,
+      payload: [{ url, enabled: true }],
+    });
+  };
+
   return (
     <>
-      <View style={{ padding: 12 }}>
-        <TextInput
-          label="URL"
-          mode="outlined"
-          onChangeText={setUrl}
-          value={url}
-        />
-        <Button onPress={addSource}>Add a new source</Button>
-        <Button onPress={addSource}>Refresh messages</Button>
-      </View>
+      <FAB
+        style={styles.fab}
+        small
+        icon={URLInput ? "close" : "plus"}
+        color={Colors[colorScheme].tint}
+        onPress={() => console.log("Pressed")}
+      />
+
+      {URLInput && (
+        <View style={{ padding: 12 }}>
+          <Button onPress={addSource}>Add a new source</Button>
+          <TextInput
+            label="URL"
+            mode="outlined"
+            onChangeText={setUrl}
+            value={url}
+          />
+        </View>
+      )}
+
+      <Button onPress={addSource}>Refresh messages</Button>
+      <Button onPress={deleteAllSourceStorage}>Remove all</Button>
       <FlatList
         data={sources}
         keyExtractor={(item) => item.url}
         renderItem={({ item }: { item: SourceHK }) => (
           <>
-            <Card style={{ marginVertical: 4, flexDirection: "row" }}>
+            <View
+              style={{
+                marginVertical: 4,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
               <Checkbox.Item
+                style={{ paddingLeft: 4 }}
+                position="leading"
                 label={item.url}
                 status={item.enabled ? "checked" : "unchecked"}
                 onPress={() => toggleSource(item.url)}
               />
-            </Card>
+              <View style={styles.icons}>
+                <Feather
+                  name="wifi-off"
+                  size={18}
+                  color="red"
+                  style={styles.icon}
+                />
+                <Pressable onPress={() => removeSource(item.url)}>
+                  <Feather
+                    name="trash-2"
+                    size={18}
+                    color="grey"
+                    style={styles.icon}
+                  />
+                </Pressable>
+                <Feather
+                  name="refresh-ccw"
+                  size={18}
+                  color="grey"
+                  style={styles.icon}
+                />
+              </View>
+            </View>
           </>
         )}
       />
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  icons: {
+    flexDirection: "row",
+  },
+  icon: {
+    marginRight: 12,
+  },
+  fab: {
+    position: "absolute",
+    margin: 16,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "white",
+  },
+});

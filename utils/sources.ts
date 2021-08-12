@@ -26,10 +26,28 @@ export const toggleSourceStorage = async (
   await AsyncStorage.setItem("@sources", JSON.stringify(sourcesSwitched));
 };
 
-export const addSourceStorage = async (url: string): Promise<void> => {
-  const sources = await getSourcesStorage();
-  sources.push({ url: url.trim(), enabled: true });
-  await AsyncStorage.setItem("@sources", JSON.stringify(sources));
+export const addSourceStorage = async (urlGiven: string): Promise<void> => {
+  const url = urlGiven.trim().toLowerCase();
+  if (url) {
+    const sources = await getSourcesStorage();
+    sources.push({ url, enabled: true });
+    await AsyncStorage.setItem("@sources", JSON.stringify(sources));
+  }
+};
+
+export const deleteSourceStorage = async (urlGiven: string): Promise<void> => {
+  const url = urlGiven.trim().toLowerCase();
+  if (url) {
+    const sources = await getSourcesStorage();
+    const newSources = sources.filter((source) => source.url !== urlGiven);
+    await AsyncStorage.setItem("@sources", JSON.stringify(newSources));
+  }
+};
+
+export const deleteAllSourceStorage = async (): Promise<void> => {
+  console.log("removes all");
+
+  await AsyncStorage.removeItem("@sources");
 };
 
 export const getActivatedSources = async (): Promise<string[]> => {

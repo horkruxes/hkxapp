@@ -37,7 +37,7 @@ export const reducer = (state: StateContext, action: Action): StateContext => {
       return {
         ...state,
         sources: state.sources.filter(
-          (source) => source.url === action.payload[0].url
+          (source) => source.url !== action.payload[0].url
         ),
       };
     case ActionType.LOAD_SOURCES_INIT:
