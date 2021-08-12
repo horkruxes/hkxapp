@@ -25,7 +25,7 @@ const db = openDatabase();
 export const initSQLite = () => {
   db.transaction((tx) => {
     tx.executeSql(
-      "create table if not exists messages (id text primary key not null, content text);"
+      "create table if not exists messages (ID text primary key not null, Content text);"
     );
   });
 };
@@ -57,7 +57,7 @@ export const getMessagesFromSQLite = ({
           (tx) => {
             tx.executeSql(
               `select * from messages where pod = ?;`,
-              [source],
+              [source.url],
               (_, { rows }) => {
                 console.log("test", (rows as any)._array as Message[]);
                 messagesGathered = messagesGathered.concat(

@@ -66,13 +66,13 @@ export const MessageSmall = ({ message, navigation }: MessageSmallProps) => {
               <Text style={styles.msgAuthor}>{message.displayedName}</Text>
 
               <Text style={styles.infos}>
-                {message.AuthorBase64.substr(0, 10)}
+                {message.AuthorBase64?.substr(0, 10)}
               </Text>
             </View>
 
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text style={styles.infos}>
-                {message.CreatedAt.substr(0, 10)}
+                {message.CreatedAt?.substr(0, 10)}
               </Text>
               <Text style={styles.infos}> on {message.Pod}</Text>
             </View>

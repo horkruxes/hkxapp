@@ -7,6 +7,7 @@ import { ListType, Message, MessageOptions, TabTwoParamList } from "../types";
 import { MessageComp } from "./message/Message";
 import { loadMessages } from "../utils/dataLoading";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { getAllMessagesFromSQLite } from "../utils/sqlite";
 
 type ScoresScreenNavigationProp = StackNavigationProp<TabTwoParamList>;
 
@@ -21,7 +22,7 @@ export default function MessageList({ options, navigation }: MessageListProps) {
 
   const getOnlineData = async () => {
     console.log("get online data with", options);
-    const newMessages = await loadMessages(options);
+    const newMessages = await getAllMessagesFromSQLite();
     setMessages(newMessages);
     setRefreshing(false);
   };
