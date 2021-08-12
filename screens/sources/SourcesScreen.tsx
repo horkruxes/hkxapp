@@ -34,7 +34,7 @@ type Props = {
 
 export default function TabSourcesScreen({ navigation }: Props) {
   const [url, setUrl] = React.useState("");
-  const [URLInput, toggleURLInput] = React.useState(true);
+  const [URLInput, toggleURLInput] = React.useState(false);
   const { state, dispatch } = useStateContext();
   const { sources } = state;
 
@@ -47,6 +47,7 @@ export default function TabSourcesScreen({ navigation }: Props) {
       payload: [{ url: url.toLowerCase().trim(), enabled: true }],
     });
     setUrl("");
+    toggleURLInput(false);
   };
 
   const toggleSource = async (url: string) => {
@@ -67,28 +68,20 @@ export default function TabSourcesScreen({ navigation }: Props) {
 
   return (
     <>
-      <FAB
-        style={styles.fab}
-        small
-        icon={URLInput ? "close" : "plus"}
-        color={Colors[colorScheme].tint}
-        onPress={() => console.log("Pressed")}
-      />
-
       {URLInput && (
         <View style={{ padding: 12 }}>
-          <Button onPress={addSource}>Add a new source</Button>
           <TextInput
             label="URL"
             mode="outlined"
             onChangeText={setUrl}
             value={url}
           />
+          <Button onPress={addSource}>Add new source</Button>
         </View>
       )}
 
       <Button onPress={addSource}>Refresh messages</Button>
-      <Button onPress={deleteAllSourceStorage}>Remove all</Button>
+      {/* <Button onPress={deleteAllSourceStorage}>Remove all</Button> */}
       <FlatList
         data={sources}
         keyExtractor={(item) => item.url}
@@ -134,6 +127,11 @@ export default function TabSourcesScreen({ navigation }: Props) {
             </View>
           </>
         )}
+      />
+      <FAB
+        style={styles.fab}
+        icon={URLInput ? "close" : "plus"}
+        onPress={() => toggleURLInput(!URLInput)}
       />
     </>
   );
