@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ListType, Message, MessageOptions } from "../types";
 import { cleanMessages } from "./signature";
-import { SourcesHK } from "./sources";
+import { SourceHK } from "./sources";
 
 // Loads message from https://source/api/xxx/arg
 export const loadMessages = async ({
@@ -50,7 +50,7 @@ export const loadSingleMessage = async ({
   sources,
   id,
 }: {
-  sources: SourcesHK[];
+  sources: SourceHK[];
   id: string;
 }): Promise<Message> => {
   let responses: Message[] = [];

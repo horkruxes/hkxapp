@@ -5,7 +5,7 @@
 
 import { AuthorMessagesRouteDeclaredProp } from "./screens/lists/author";
 import { CommentsRouteDeclaredProp } from "./screens/lists/comments";
-import { SourcesHK } from "./utils/sources";
+import { SourceHK } from "./utils/sources";
 
 export type RootStackParamList = {
   Root: undefined;
@@ -83,13 +83,14 @@ export class Message {
 }
 
 export enum ListType {
-  All = "message",
+  All = "all",
+  Messages = "message",
   User = "user",
   Comments = "comments",
 }
 
 export type MessageOptions = {
-  sources: SourcesHK[];
+  sources: SourceHK[];
   type: ListType | string;
   arg?: string;
 };

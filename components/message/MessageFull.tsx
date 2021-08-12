@@ -64,10 +64,7 @@ export const MessageFull = ({ message, navigation }: MessageFullProps) => {
             <>
               <Text>
                 {!message.Correct && "❌"}
-                <Text style={styles.infos}>
-                  {" "}
-                  Author: {message.AuthorBase64}
-                </Text>
+                <Text style={styles.infos}>Author: {message.AuthorBase64}</Text>
               </Text>
               <Text style={styles.infos}>
                 Signature: {message.SignatureBase64}

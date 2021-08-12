@@ -1,9 +1,9 @@
 import React, { useContext, useReducer } from "react";
-import { SourcesHK } from "../utils/sources";
+import { SourceHK } from "../utils/sources";
 import { Action, reducer } from "./reducer";
 
 export interface StateContext {
-  sources: SourcesHK[];
+  sources: SourceHK[];
   sourcesLoaded: boolean;
 }
 export interface Store {

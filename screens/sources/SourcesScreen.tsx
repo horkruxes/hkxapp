@@ -15,7 +15,7 @@ import {
 
 import {
   addSourceStorage,
-  SourcesHK,
+  SourceHK,
   toggleSourceStorage,
 } from "../../utils/sources";
 import { useStateContext } from "../../state/state";
@@ -60,11 +60,12 @@ export default function TabSourcesScreen({ navigation }: Props) {
           value={url}
         />
         <Button onPress={addSource}>Add a new source</Button>
+        <Button onPress={addSource}>Refresh messages</Button>
       </View>
       <FlatList
         data={sources}
         keyExtractor={(item) => item.url}
-        renderItem={({ item }: { item: SourcesHK }) => (
+        renderItem={({ item }: { item: SourceHK }) => (
           <>
             <Card style={{ marginVertical: 4, flexDirection: "row" }}>
               <Checkbox.Item

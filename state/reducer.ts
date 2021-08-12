@@ -1,4 +1,4 @@
-import { SourcesHK } from "../utils/sources";
+import { SourceHK } from "../utils/sources";
 import { StateContext } from "./state";
 
 export enum ActionType {
@@ -10,7 +10,7 @@ export enum ActionType {
 
 export type Action = {
   type: ActionType;
-  payload: SourcesHK[];
+  payload: SourceHK[];
 };
 
 export const reducer = (state: StateContext, action: Action): StateContext => {

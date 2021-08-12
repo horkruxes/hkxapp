@@ -42,7 +42,7 @@ export default function TabTwoScreen({ navigation }: Props) {
   return (
     <MessageList
       navigation={navigation}
-      options={{ sources, type: ListType.All, arg: "" }}
+      options={{ sources, type: ListType.Messages, arg: "" }}
     />
   );
 }

@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const getSourcesStorage = async (): Promise<SourcesHK[]> => {
+export const getSourcesStorage = async (): Promise<SourceHK[]> => {
   const potentialSources = await AsyncStorage.getItem("@sources");
   if (potentialSources) {
     return JSON.parse(potentialSources);
@@ -9,7 +9,7 @@ export const getSourcesStorage = async (): Promise<SourcesHK[]> => {
   }
 };
 
-export type SourcesHK = {
+export type SourceHK = {
   url: string;
   enabled: boolean;
 };
