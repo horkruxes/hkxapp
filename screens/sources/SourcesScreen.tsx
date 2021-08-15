@@ -25,6 +25,7 @@ import { ActionType } from "../../state/reducer";
 import { Feather } from "@expo/vector-icons";
 import useColorScheme from "../../hooks/useColorScheme";
 import Colors from "../../constants/Colors";
+import { syncFromOnlineToSQLite } from "../../utils/sqlite";
 
 type ScoresScreenNavigationProp = StackNavigationProp<TabTwoParamList>;
 
@@ -80,7 +81,9 @@ export default function TabSourcesScreen({ navigation }: Props) {
         </View>
       )}
 
-      <Button onPress={addSource}>Refresh messages</Button>
+      <Button onPress={() => syncFromOnlineToSQLite(sources)}>
+        Refresh messages
+      </Button>
       {/* <Button onPress={deleteAllSourceStorage}>Remove all</Button> */}
       <FlatList
         data={sources}

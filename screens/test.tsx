@@ -28,7 +28,8 @@ export default function TabTestScreen({ navigation }: Props) {
         onPress={() =>
           storeMessageToSQLite(
             new Message({
-              Content: "hello me",
+              Content:
+                "hello me" + (Math.random() + 1).toString(36).substring(10),
               ID: (Math.random() + 1).toString(36).substring(7),
             })
           )
